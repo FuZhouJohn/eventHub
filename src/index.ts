@@ -15,21 +15,14 @@ class EventHub {
     //     'c': [fn5,fn6]
     // }
     // 订阅
-    on(eventName,fn){
+    on(eventName, fn) {
         // 将 fn 保存到 cache[eventName] 数组中
-        if(!(this.cache[eventName] instanceof Array)){
-            this.cache[eventName] = []
-        }
-        const array = this.cache[eventName]
-        array.push(fn)
+        this.cache[eventName] = this.cache[eventName] || []
+        this.cache[eventName].push(fn)
     }
-    emit(eventName){
+    emit(eventName) {
         // 将 cache[eventHub] 数组中的全部 fn 依次执行
-        if(!(this.cache[eventName] instanceof Array)){
-            this.cache[eventName] = []
-        }
-        const array = this.cache[eventName]
-        array.forEach(fn => {
+        (this.cache[eventName] || []).forEach(fn => {
             fn()
         });
     }

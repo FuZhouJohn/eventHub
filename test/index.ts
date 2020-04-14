@@ -16,3 +16,5 @@ eventHub.on('xxx', () => {
 eventHub.emit('xxx')
 
 console.assert(called,'订阅成功发布')
+
+
