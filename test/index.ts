@@ -1,12 +1,14 @@
 import EventHub from '../src/index'
 
-const test1 = (message) => {
+type TestCase = (message: string) => void
+
+const test1: TestCase = (message) => {
     const eventHub = new EventHub()
     console.assert(eventHub instanceof Object === true)
     console.log(message)
 }
 
-const test2 = (message) => {
+const test2: TestCase = (message) => {
     const eventHub = new EventHub()
 
     let called = false
@@ -16,14 +18,14 @@ const test2 = (message) => {
     })
 
     eventHub.emit('xxx')
-    setTimeout(() => {
-        console.assert(called === true)
-        console.log(message)
-    }, 1000)
+
+    console.assert(called)
+    console.log(message)
+
 
 }
 
-const test3 = (message) => {
+const test3:TestCase = (message) => {
     const eventHub = new EventHub()
 
     let called = false
@@ -35,14 +37,12 @@ const test3 = (message) => {
 
     eventHub.emit('xxx', '成功传递参数')
 
-    setTimeout(() => {
-        console.assert(called)
-        console.log(message)
-    }, 1000)
+    console.assert(called)
+    console.log(message)
 }
 
 
-const test4 = (message) => {
+const test4:TestCase = (message) => {
     const eventHub = new EventHub()
     let called = false
     const fn1 = () => {
@@ -52,10 +52,9 @@ const test4 = (message) => {
     eventHub.off('zzz', fn1)
     eventHub.emit('zzz')
 
-    setTimeout(() => {
-        console.assert(called === false)
-        console.log(message)
-    }, 1000)
+    console.assert(called === false)
+    console.log(message)
+
 }
 
 test1('EventHub 创建对象')
