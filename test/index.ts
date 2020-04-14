@@ -29,3 +29,17 @@ eventHub.on('yyy', data => {
 eventHub.emit('yyy', '成功传递参数')
 
 console.assert(called2, '订阅成功发布')
+
+// on->off 取消订阅
+
+let called3 = false
+const fn1 = () => {
+    called3 = true
+}
+eventHub.on('zzz', fn1)
+eventHub.off('zzz',fn1)
+eventHub.emit('zzz')
+
+setTimeout(() => {
+    console.assert(!called3, '成功取消订阅')
+}, 1000)

@@ -8,7 +8,7 @@
 
 
 class EventHub {
-    cache = {}
+    private cache = {}
     // {
     //     'a': [fn1,fn2],
     //     'b': [fn3,fn4],
@@ -20,10 +20,29 @@ class EventHub {
         this.cache[eventName] = this.cache[eventName] || []
         this.cache[eventName].push(fn)
     }
-    emit(eventName,data?) {
+    emit(eventName, data?) {
         // 将 cache[eventHub] 数组中的全部 fn 依次执行
         (this.cache[eventName] || []).forEach(fn => fn(data));
     }
+    off(eventName, fn) {
+        const index = indexOf(this.cache[eventName], fn)
+        if (index === -1) return
+        this.cache[eventName].splice(index, 1)
+    }
 }
+
+
+function indexOf(array, item) {
+    if(!array) return -1
+    let index = -1
+    for (let i = 0; i < array.length; i++) {
+        if (array[i] === item) {
+            index = i
+            break;
+        }
+    }
+    return index
+}
+
 
 export default EventHub
