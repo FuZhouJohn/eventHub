@@ -20,11 +20,9 @@ class EventHub {
         this.cache[eventName] = this.cache[eventName] || []
         this.cache[eventName].push(fn)
     }
-    emit(eventName) {
+    emit(eventName,data?) {
         // 将 cache[eventHub] 数组中的全部 fn 依次执行
-        (this.cache[eventName] || []).forEach(fn => {
-            fn()
-        });
+        (this.cache[eventName] || []).forEach(fn => fn(data));
     }
 }
 
